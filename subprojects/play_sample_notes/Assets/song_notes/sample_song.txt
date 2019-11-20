@@ -1,9 +1,9 @@
 E,rt
-B_3,r2
+B_1_3,r2
 E,rt
-B_3,r2
+B_1_3,r2
 E,rt
-B_3,r2
+B_1_3,r2
 C,rt
 G,r3
 D,rt
