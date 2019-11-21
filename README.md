@@ -14,7 +14,7 @@
 #### 2019 Fall Quarter
 #### Professor Nadir Weibel
 
-Group Members
+-- Group Members --
 
 Sabrina Simao
 
