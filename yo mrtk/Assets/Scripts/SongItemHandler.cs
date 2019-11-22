@@ -30,7 +30,7 @@ public class SongItemHandler : MonoBehaviour
 
             //accessing the script on another object and calling a function
             PlaySongNotes play = (PlaySongNotes) keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
-            play.startPlaying();
+            play.songSelected();
         }
 
     }

@@ -14,6 +14,11 @@ public class GameState : Singleton<GameState>
 
     public String[] songs = new String[2] { "Twinkle Twinkle", "Happy Birthday" };
 
+    /* MR begin */
+    public Boolean keyboardPlaced = false;
+
+    /* MR end */
+
 
     private void Start()
     {

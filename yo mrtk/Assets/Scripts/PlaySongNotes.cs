@@ -5,22 +5,41 @@ using System.IO;
 
 public class PlaySongNotes : MonoBehaviour
 {
-	int frameNum;
-	List<Transform> pianoKeys = new List<Transform>();
-	SongProviderV1 sp;
-	KeyPress prevKp;
-	int prevKeyIndex = -1;
-	Color prevKeyColor;
+    int frameNum;
+    List<Transform> pianoKeys = new List<Transform>();
+    SongProviderV1 sp;
+    KeyPress prevKp;
+    int prevKeyIndex = -1;
+    Color prevKeyColor;
     double startTS;
     bool playing;
+    public Transform keyboardPlacingButton;
 
-	// Start is called before the first frame update
-	void Start()
-	{
-		setupPainoKeys();
-		sp = new SongProviderV1(getCurrentSongFile());
-		Debug.Log(pianoKeys[0].name);
-	}
+    // Start is called before the first frame update
+    void Start()
+    {
+        setupPainoKeys();
+        sp = new SongProviderV1(getCurrentSongFile());
+        Debug.Log(pianoKeys[0].name);
+    }
+
+    public void songSelected()
+    {
+        if(GameState.Instance.keyboardPlaced == false)
+        {
+            makeUserPlaceKeyboard();
+        } 
+        else
+        {
+            startPlaying();
+        }
+    }
+
+    void makeUserPlaceKeyboard()
+    {
+        KeyboardPlacing kp = (KeyboardPlacing) keyboardPlacingButton.gameObject.GetComponent(typeof(KeyboardPlacing));
+        kp.userPlacingKeyboard();
+    }
 
     public void startPlaying()
     {
