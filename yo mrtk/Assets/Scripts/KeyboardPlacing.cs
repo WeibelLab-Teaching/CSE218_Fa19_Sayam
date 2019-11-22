@@ -33,6 +33,11 @@ public class KeyboardPlacing : MonoBehaviour
         if(currentlyPlacingKeyboard)
         {
             Debug.Log("kEYBOARD PLACEMENT dONE");
+            gameObject.SetActive(false);
+            GameState.Instance.keyboardPlaced = true;
+
+            PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
+            psn.startPlaying();
         }
     }
 }
