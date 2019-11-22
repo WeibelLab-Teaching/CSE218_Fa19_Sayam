@@ -38,7 +38,13 @@ public class PlaySongNotes : MonoBehaviour
 		KeyPress kp = sp.getPressedKeyAtTime(t);
 		if (kp == null)
 		{
-			Debug.Log("ended");
+            if(prevKeyIndex != -1)
+            {
+                pianoKeys[prevKeyIndex].gameObject.GetComponent<MeshRenderer>().material.color = prevKeyColor;
+                prevKeyIndex = -1;
+            }
+            
+            Debug.Log("ended");
 			return;
 		}
 
