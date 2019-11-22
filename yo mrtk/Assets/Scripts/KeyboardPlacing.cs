@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeyboardPlacing : MonoBehaviour
 {
     public Transform keyboard;
+    public Transform instructionText;
     bool currentlyPlacingKeyboard = false;
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class KeyboardPlacing : MonoBehaviour
         {
             currentlyPlacingKeyboard = true;
             gameObject.SetActive(true);
+            instructionText.gameObject.SetActive(true);
         }
     }
 
@@ -34,6 +36,7 @@ public class KeyboardPlacing : MonoBehaviour
         {
             Debug.Log("kEYBOARD PLACEMENT dONE");
             gameObject.SetActive(false);
+            instructionText.gameObject.SetActive(false);
             GameState.Instance.keyboardPlaced = true;
 
             PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
