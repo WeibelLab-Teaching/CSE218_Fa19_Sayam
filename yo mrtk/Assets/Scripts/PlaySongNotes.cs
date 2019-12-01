@@ -14,12 +14,17 @@ public class PlaySongNotes : MonoBehaviour
     double startTS;
     bool playing;
     public Transform keyboardPlacingButton;
+    public Transform PlayButton;
+    int prev_t = -1;
+    int return_time = -1;
 
     // Start is called before the first frame update
     void Start()
     {
         setupPainoKeys();
         sp = new SongProviderV1(getCurrentSongFile());
+        //Time.timeScale = ;
+        //Time.fixedDeltaTime = 2e-10f * Time.timeScale;
         Debug.Log(pianoKeys[0].name);
     }
 
@@ -33,6 +38,7 @@ public class PlaySongNotes : MonoBehaviour
         {
             startPlaying();
         }
+
     }
 
     void makeUserPlaceKeyboard()
@@ -44,19 +50,44 @@ public class PlaySongNotes : MonoBehaviour
     public void startPlaying()
     {
         startTS = Time.time;
-        playing = true;
+        GameState.Instance.Playing = true;
     }
 
-	// Update is called once per frame
-	void Update()
+
+
+
+    // Update is called once per frame
+    void Update()
 	{
-        if (!playing) return;
+        if (!GameState.Instance.Playing)
+        {   
+            startTS = Time.time;
+            return_time = -1;
+            return;
+        }
+        
+        if(return_time == (int)(Time.time - startTS))
+        {
+            return;
+        }
+        if (GameState.Instance.Forward)
+        {
+            prev_t = prev_t + 1;
+            GameState.Instance.Forward = false;
+        }
+        if (GameState.Instance.Backward)
+        {
+            prev_t = prev_t - 3;
+            GameState.Instance.Backward = false;
+        }
+        return_time = (int)(Time.time - startTS);
+        int t = prev_t + 1;
+        prev_t = t;
+        Debug.Log(t);
 
-		double t = Time.time - startTS;
+		if (t >= sp.songSequence.Count)
 
-		KeyPress kp = sp.getPressedKeyAtTime(t);
-		if (kp == null)
-		{
+        {
             if(prevKeyIndex != -1)
             {
                 pianoKeys[prevKeyIndex].gameObject.GetComponent<MeshRenderer>().material.color = prevKeyColor;
@@ -67,7 +98,8 @@ public class PlaySongNotes : MonoBehaviour
 			return;
 		}
 
-		Debug.Log(kp.key + " " + kp.finger);
+        KeyPress kp = sp.songSequence[t];
+        Debug.Log(kp.key + " " + kp.finger);
 
 		if (kp == prevKp) return;
 
@@ -93,7 +125,6 @@ public class PlaySongNotes : MonoBehaviour
 		prevKp = kp;
 	}
 
-    
     void setupPainoKeys()
 	{
 		foreach (Transform child in transform)
@@ -136,7 +167,7 @@ public class SongProviderV1
 		//reader.Close();
 	}
 
-	public KeyPress getPressedKeyAtTime(double time)
+	public KeyPress getPressedKeyAtTime(double time,int prev_t)
 	{
 		Debug.Log(((int)time)  + " " + songSequence.Count);
 		if (((int)time) >= songSequence.Count)
