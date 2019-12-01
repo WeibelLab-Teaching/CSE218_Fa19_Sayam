@@ -33,12 +33,7 @@ public class SongItemHandler : MonoBehaviour
         if (!keyboard.gameObject.activeSelf)
         {
             keyboard.gameObject.SetActive(true);
+            fullMenu.gameObject.SetActive(false);
         }
-
-        // re-activate the billboarding and radial view on full menu
-        // disable billboarding and radial view
-        fullMenu.gameObject.GetComponent<Billboard>().enabled = true;
-        fullMenu.gameObject.GetComponent<RadialView>().enabled = true;
-
     }
 }

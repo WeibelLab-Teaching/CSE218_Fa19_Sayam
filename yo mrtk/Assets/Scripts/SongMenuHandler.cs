@@ -28,21 +28,6 @@ public class SongMenuHandler : MonoBehaviour
 
     public void OnAirTap() 
     {
-        if (!songList.gameObject.activeSelf)
-        {
-            songList.transform.position = this.transform.position;
-            songList.transform.rotation = this.transform.rotation;
-            songList.gameObject.SetActive(true);
-
-            // disable billboarding and radial view
-            fullMenu.gameObject.GetComponent<Billboard>().enabled = false;
-            fullMenu.gameObject.GetComponent<RadialView>().enabled = false;
-
-        } else
-        {
-            songList.gameObject.SetActive(false);
-        }
-
-        Debug.Log("Song menu clicked!!!!!");
+        songList.gameObject.SetActive(!songList.gameObject.activeSelf);
     }
 }

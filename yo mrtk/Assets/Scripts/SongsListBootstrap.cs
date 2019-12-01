@@ -20,9 +20,6 @@ public class SongsListBootstrap : MonoBehaviour
         for (int i=0; i < GameState.Instance.songs.Length; i++)
         {
             Transform item = Object.Instantiate(songItemPrefab, songsList);
-            Debug.Log(item);
-            Debug.Log(item.Find("ButtonContent"));
-            Debug.Log(item.Find("ButtonContent").Find("Label"));
 
             item.Find("ButtonContent").Find("Label").GetComponent<TextMesh>().text = GameState.Instance.songs[i];
             item.position = new Vector3(songsList.position.x, songsList.position.y - 0.1f - i * 0.1f, songsList.position.z);
@@ -32,11 +29,6 @@ public class SongsListBootstrap : MonoBehaviour
             item.GetComponent<SongItemHandler>().currentItem = item;
             item.GetComponent<SongItemHandler>().selectSongBtn = selectSongBtn;
             item.GetComponent<SongItemHandler>().fullMenu = fullMenu;
-
-            //item.gameObject.AddComponent<RadialView>();
-            //item.GetComponent<RadialView>().MaxViewDegrees = 5;
-            //item.gameObject.AddComponent<Billboard>();
-            //item.GetComponent<Billboard>().PivotAxis = Microsoft.MixedReality.Toolkit.Utilities.PivotAxis.Free;
 
             item.GetComponent<Interactable>().OnClick.AddListener(item.GetComponent<SongItemHandler>().OnAirTap);
         }

@@ -7,6 +7,8 @@ using Microsoft.MixedReality.Toolkit.Input;
 public class MenuPositionHandler : MonoBehaviour
 {
 
+    public Transform keyboard;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,6 @@ public class MenuPositionHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
+       
     }
 }
