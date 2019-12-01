@@ -33,7 +33,7 @@ public class SongItemHandler : MonoBehaviour
         if (!keyboard.gameObject.activeSelf)
         {
             keyboard.gameObject.SetActive(true);
-            fullMenu.gameObject.SetActive(false);
+            //fullMenu.gameObject.SetActive(false);
 
             //accessing the script on another object and calling a function
             PlaySongNotes play = (PlaySongNotes) keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
