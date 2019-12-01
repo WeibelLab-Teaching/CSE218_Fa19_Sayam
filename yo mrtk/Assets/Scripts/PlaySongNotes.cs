@@ -51,6 +51,7 @@ public class PlaySongNotes : MonoBehaviour
     {
         startTS = Time.time;
         GameState.Instance.Playing = true;
+
     }
 
 
@@ -114,7 +115,15 @@ public class PlaySongNotes : MonoBehaviour
 			{
 				prevKeyColor = pianoKeys[i].gameObject.GetComponent<MeshRenderer>().material.color;
 
-				Color newColor = new Color(1, 0, 0, 1);
+                Color newColor;
+                if (kp.key.StartsWith("B_"))
+                {
+                    newColor = new Color(1, 0, 0, 1);
+                }
+                else
+                {
+                    newColor = new Color(0, 1, 0, 1);
+                }
 				pianoKeys[i].gameObject.GetComponent<MeshRenderer>().material.color = newColor;
 				prevKeyIndex = i;
 
@@ -158,12 +167,15 @@ public class SongProviderV1
 		//StreamReader reader = new StreamReader(filePath);
 		string[] contents = File.ReadAllLines(filePath);
 		Debug.Log("contents of file: " + contents);
-        for(int i=0;i<contents.Length;i++)
-		{
-			string[] keyDetails = contents[i].Split(',');
-			KeyPress kp = new KeyPress(keyDetails[0], keyDetails[1], i);
-			songSequence.Add(kp);
-		}
+        for (int j = 0; j < 200; j++)
+        {
+            for (int i = 0; i < contents.Length; i++)
+            {
+                string[] keyDetails = contents[i].Split(',');
+                KeyPress kp = new KeyPress(keyDetails[0], keyDetails[1], i);
+                songSequence.Add(kp);
+            }
+        }
 		//reader.Close();
 	}
 

@@ -41,6 +41,19 @@ public class KeyboardPlacing : MonoBehaviour
         }
     }
 
+
+    public void makePianoTransparent()
+    {
+
+        foreach (Transform key in keyboard)
+        {
+            Color prevKeyColor = key.gameObject.GetComponent<MeshRenderer>().material.color;
+            Debug.Log("doing a key " + prevKeyColor.r + " " + prevKeyColor.g + " " + prevKeyColor.b);
+            Color newColor = new Color(prevKeyColor.r, prevKeyColor.g, prevKeyColor.b, 0.1f);
+            key.gameObject.GetComponent<MeshRenderer>().material.color = newColor;
+        }
+    }
+
     public void OnAirTap()
     {
         if(currentlyPlacingKeyboard)
@@ -49,6 +62,8 @@ public class KeyboardPlacing : MonoBehaviour
             gameObject.SetActive(false);
             instructionText.gameObject.SetActive(false);
             gameRoot.gameObject.GetComponent<ManipulationHandler>().enabled = false;
+
+            //makePianoTransparent();
 
             PlayButton.gameObject.SetActive(true);
             ForwardButton.gameObject.SetActive(true);

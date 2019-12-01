@@ -73,7 +73,22 @@ ModelImporter:
     4300020: B_1_3
     4300022: B_1_4
     4300024: B_1_5
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 2db69e5fa75e6404aa68ecff58a70bde, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 69bca7141fc56ca47a7de206c5a2e76f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 2db69e5fa75e6404aa68ecff58a70bde, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
