@@ -18,6 +18,9 @@ public class GameState : Singleton<GameState>
     public Boolean keyboardPlaced = false;
 
     /* MR end */
+    public Boolean Playing = false;
+    public Boolean Forward = false;
+    public Boolean Backward = false;
 
 
     private void Start()
