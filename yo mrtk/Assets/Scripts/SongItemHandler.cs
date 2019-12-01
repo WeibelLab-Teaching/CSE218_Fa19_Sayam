@@ -30,15 +30,11 @@ public class SongItemHandler : MonoBehaviour
         songList.gameObject.SetActive(false);
         GameState.Instance.currentSong = currentItem.Find("ButtonContent").Find("Label").GetComponent<TextMesh>().text;
         selectSongBtn.Find("ButtonContent").Find("Label").GetComponent<TextMesh>().text = GameState.Instance.truncate("Song: " + GameState.Instance.currentSong);
-        if (!keyboard.gameObject.activeSelf)
-        {
-            keyboard.gameObject.SetActive(true);
-            //fullMenu.gameObject.SetActive(false);
-
-            //accessing the script on another object and calling a function
-            PlaySongNotes play = (PlaySongNotes) keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
-            play.songSelected();
-        }
+       
+        //accessing the script on another object and calling a function
+        PlaySongNotes play = (PlaySongNotes) keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
+        play.songSelected();
+        
 
     }
 }
