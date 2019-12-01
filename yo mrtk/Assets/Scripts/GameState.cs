@@ -21,13 +21,20 @@ public class GameState : Singleton<GameState>
     [SerializeField]
     private String _currentTempo;
 
+    /* MR begin */
+    public Boolean keyboardPlaced = false;
+
+    /* MR end */
+
+
     private void Start()
     {
         _currentSong = "";
         _currentTempo = "1x";
-        if (onGameStateChange != null)
+        if (onGameStateChange != null) {
             onGameStateChange.Invoke(_currentSong);
             onGameStateChange.Invoke(_currentTempo);
+        }
     }
 
     public String currentSong
@@ -80,6 +87,7 @@ public class GameState : Singleton<GameState>
             return input.Substring(0,12) + "...";
         }
         return input;
+
     }
 
 }
