@@ -63,7 +63,7 @@ public class KeyboardPlacing : MonoBehaviour
             instructionText.gameObject.SetActive(false);
             gameRoot.gameObject.GetComponent<ManipulationHandler>().enabled = false;
 
-            //makePianoTransparent();
+            makePianoTransparent();
 
             PlayButton.gameObject.SetActive(true);
             ForwardButton.gameObject.SetActive(true);
