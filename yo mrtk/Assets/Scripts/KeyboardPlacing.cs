@@ -8,6 +8,7 @@ public class KeyboardPlacing : MonoBehaviour
     public Transform keyboard;
     public Transform instructionText;
     public Transform PlayButton;
+    public Transform PauseButton;
     public Transform ForwardButton;
     public Transform BackwardButton;
     public Transform fullMenu;
@@ -65,7 +66,8 @@ public class KeyboardPlacing : MonoBehaviour
 
             makePianoTransparent();
 
-            PlayButton.gameObject.SetActive(true);
+            //PlayButton.gameObject.SetActive(true);
+            PauseButton.gameObject.SetActive(true);
             ForwardButton.gameObject.SetActive(true);
             BackwardButton.gameObject.SetActive(true);
             GameState.Instance.keyboardPlaced = true;

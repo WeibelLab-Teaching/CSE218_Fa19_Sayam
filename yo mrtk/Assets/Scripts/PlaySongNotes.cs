@@ -16,7 +16,8 @@ public class PlaySongNotes : MonoBehaviour
 
     double curTS;
     public Transform keyboardPlacingButton;
-    public Transform PlayButton;
+    public Transform playButton;
+    public Transform pauseButton;
 
     // 3..2..1 button parent
     public Transform getReadyButton;
@@ -75,6 +76,9 @@ public class PlaySongNotes : MonoBehaviour
         curTS = Time.time;
         GameState.Instance.Playing = true;
         sp.beginSongFromStart(curTS);
+
+        playButton.gameObject.SetActive(false);
+        pauseButton.gameObject.SetActive(true);
     }
 
     // Called by button callback
