@@ -15,11 +15,13 @@ public class PlaySongNotes : MonoBehaviour
     Color prevKeyColor;
 
     double curTS;
-    //bool playing;
     public Transform keyboardPlacingButton;
     public Transform PlayButton;
-    //int prev_t = -1;
-    //int return_time = -1;
+
+    // 3..2..1 button parent
+    public Transform getReadyButton;
+    double getReadyStartTS;
+    bool showingGetReady = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,11 +45,24 @@ public class PlaySongNotes : MonoBehaviour
         else
         {
             sp = new SongPlayer(getCurrentSongFile());
-            startPlayingFromBeginning();
+            startGetReadyCountDown();
         }
 
     }
+
+    public void startGetReadyCountDown()
+    {
+        showingGetReady = true;
+        getReadyStartTS = Time.time;
+        getReadyButton.gameObject.SetActive(true);
+    }
     
+    void getReadyDone()
+    {
+        showingGetReady = false;
+        getReadyButton.gameObject.SetActive(false);
+        startPlayingFromBeginning();
+    }
 
     void makeUserPlaceKeyboard()
     {
@@ -55,29 +70,30 @@ public class PlaySongNotes : MonoBehaviour
         kp.userPlacingKeyboard();
     }
 
-    public void startPlayingFromBeginning()
+    void startPlayingFromBeginning()
     {
         curTS = Time.time;
         GameState.Instance.Playing = true;
         sp.beginSongFromStart(curTS);
     }
 
+    // Called by button callback
     public void playPauseSong()
     {
         sp.playPauseSong(Time.time);
     }
 
+    // Called by button callback
     public void forwardSong()
     {
         sp.forwardSong();
     }
 
+    // Called by button callback
     public void rewindSong()
     {
         sp.rewindSong();
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -109,6 +125,21 @@ public class PlaySongNotes : MonoBehaviour
         Debug.Log(t);*/
 
         double curTS = Time.time;
+
+        if(showingGetReady)
+        {
+            double elapsed = curTS - getReadyStartTS;
+            double mul = 1.2;
+            if (elapsed < 0.5*mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "3.";
+            else if (elapsed < 1 * mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "3 .";
+            else if (elapsed < 1.5 * mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "2.";
+            else if (elapsed < 2 * mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "2 .";
+            else if (elapsed < 2.5 * mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "1.";
+            else if (elapsed < 3 * mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "1 .";
+            else if (elapsed < 3.3 * mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "GO";
+            else getReadyDone();
+            return;
+        }
 
 		if (sp.getPressedKeyAtTime(curTS) == null)
         {
