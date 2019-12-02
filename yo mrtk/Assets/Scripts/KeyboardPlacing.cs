@@ -72,7 +72,7 @@ public class KeyboardPlacing : MonoBehaviour
             fullMenu.gameObject.SetActive(true);
 
             PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
-            psn.startPlaying();
+            psn.startPlayingFromBeginning();
         }
     }
 }

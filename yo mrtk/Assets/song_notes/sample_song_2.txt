@@ -1,0 +1,13 @@
+C1,rt
+B_1_1,rt
+D1,rt
+B_1_2,rt
+E1,rt
+F1,rt
+B_1_3,rt
+G1,rt
+B_1_4,rt
+A1,rt
+B_1_5,rt
+B1,rt
+C2,rt

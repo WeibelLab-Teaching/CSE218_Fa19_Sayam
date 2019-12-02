@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayPause : MonoBehaviour
 {
+    public Transform keyboard;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,8 @@ public class PlayPause : MonoBehaviour
             GameState.Instance.Playing = !GameState.Instance.Playing;
 
 
+            PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
+            psn.playPauseSong();
         }
     }
 }

@@ -5,24 +5,30 @@ using System.IO;
 
 public class PlaySongNotes : MonoBehaviour
 {
-    int frameNum;
+    //int frameNum;
     List<Transform> pianoKeys = new List<Transform>();
-    SongProviderV1 sp;
+    SongPlayer sp;
+
+    // Prev state
     KeyPress prevKp;
     int prevKeyIndex = -1;
     Color prevKeyColor;
-    double startTS;
-    bool playing;
+
+    double curTS;
+    //bool playing;
     public Transform keyboardPlacingButton;
     public Transform PlayButton;
-    int prev_t = -1;
-    int return_time = -1;
+    //int prev_t = -1;
+    //int return_time = -1;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Add piano keys gameobjects to a list
         setupPainoKeys();
-        sp = new SongProviderV1(getCurrentSongFile());
+
+        // Init song Provider
+        sp = new SongPlayer(getCurrentSongFile());
         //Time.timeScale = ;
         //Time.fixedDeltaTime = 2e-10f * Time.timeScale;
         Debug.Log(pianoKeys[0].name);
@@ -36,10 +42,12 @@ public class PlaySongNotes : MonoBehaviour
         } 
         else
         {
-            startPlaying();
+            sp = new SongPlayer(getCurrentSongFile());
+            startPlayingFromBeginning();
         }
 
     }
+    
 
     void makeUserPlaceKeyboard()
     {
@@ -47,20 +55,34 @@ public class PlaySongNotes : MonoBehaviour
         kp.userPlacingKeyboard();
     }
 
-    public void startPlaying()
+    public void startPlayingFromBeginning()
     {
-        startTS = Time.time;
+        curTS = Time.time;
         GameState.Instance.Playing = true;
-
+        sp.beginSongFromStart(curTS);
     }
 
+    public void playPauseSong()
+    {
+        sp.playPauseSong(Time.time);
+    }
+
+    public void forwardSong()
+    {
+        sp.forwardSong();
+    }
+
+    public void rewindSong()
+    {
+        sp.rewindSong();
+    }
 
 
 
     // Update is called once per frame
     void Update()
 	{
-        if (!GameState.Instance.Playing)
+        /*if (!GameState.Instance.Playing)
         {   
             startTS = Time.time;
             return_time = -1;
@@ -84,10 +106,11 @@ public class PlaySongNotes : MonoBehaviour
         return_time = (int)(Time.time - startTS);
         int t = prev_t + 1;
         prev_t = t;
-        Debug.Log(t);
+        Debug.Log(t);*/
 
-		if (t >= sp.songSequence.Count)
+        double curTS = Time.time;
 
+		if (sp.getPressedKeyAtTime(curTS) == null)
         {
             if(prevKeyIndex != -1)
             {
@@ -95,12 +118,12 @@ public class PlaySongNotes : MonoBehaviour
                 prevKeyIndex = -1;
             }
             
-            Debug.Log("ended");
+            Debug.Log("not playing");
 			return;
 		}
 
-        KeyPress kp = sp.songSequence[t];
-        Debug.Log(kp.key + " " + kp.finger);
+        KeyPress kp = sp.getPressedKeyAtTime(curTS);
+        //Debug.Log(kp.key + " " + kp.finger);
 
 		if (kp == prevKp) return;
 
@@ -145,8 +168,86 @@ public class PlaySongNotes : MonoBehaviour
 
 	string getCurrentSongFile()
 	{
-		return "Assets/song_notes/sample_song.txt";
-	}
+        string curSong = GameState.Instance.currentSong;
+        if (curSong.Equals("Twinkle Twinkle"))
+        {
+            return "Assets/song_notes/sample_song.txt";
+        }
+        return "Assets/song_notes/sample_song_2.txt";
+    }
+}
+
+public class SongPlayer
+{
+    double startTS = -1;
+    double pauseTS;
+    bool paused;
+    double prevTempo = 1, tempo = 1;
+
+    SongProviderV1 sp;
+
+    public SongPlayer(string filePath)
+    {
+        sp = new SongProviderV1(filePath);
+        
+    }
+
+    public void beginSongFromStart(double curTS)
+    {
+        Debug.Log("beginSongFromStart");
+        startTS = curTS;
+        paused = false;
+
+        string tempoString = GameState.Instance.currentTempo;
+        tempoString = tempoString.Substring(0, tempoString.Length - 1);
+        tempo = double.Parse(tempoString);
+        prevTempo = tempo;
+    }
+
+    public void playPauseSong(double curTS)
+    {
+        if (!paused)
+        {
+            paused = true;
+            pauseTS = curTS;
+        }
+        else
+        {
+            paused = false;
+            startTS += (curTS - pauseTS);
+        }
+    }
+
+    public void rewindSong()
+    {
+        startTS += 3/tempo;
+    }
+
+    public void forwardSong()
+    {
+        startTS -= 3/tempo;
+    }
+
+    public KeyPress getPressedKeyAtTime(double curTS)
+    {
+        if (startTS == -1) return null;
+
+        //Debug.Log("tempo " + GameState.Instance.currentTempo);
+        string tempoString = GameState.Instance.currentTempo;
+        tempoString = tempoString.Substring(0, tempoString.Length - 1);
+        tempo = double.Parse(tempoString);
+
+        if(paused) return sp.getPressedKeyAtTime((pauseTS - startTS) * tempo);
+
+        if (tempo != prevTempo)
+        {
+            Debug.Log("Changed tempo");
+            double dist = (curTS - startTS) * prevTempo / tempo;
+            startTS = curTS - dist;
+            prevTempo = tempo;
+        }
+        return sp.getPressedKeyAtTime((curTS - startTS) * tempo);
+    }
 }
 
 // Song provider with no concept of key timestamp
@@ -154,7 +255,7 @@ public class PlaySongNotes : MonoBehaviour
 // present in input file
 public class SongProviderV1
 {
-	public List<KeyPress> songSequence;
+	private List<KeyPress> songSequence;
 
 	public SongProviderV1(string filePath)
 	{
@@ -179,9 +280,9 @@ public class SongProviderV1
 		//reader.Close();
 	}
 
-	public KeyPress getPressedKeyAtTime(double time,int prev_t)
+	public KeyPress getPressedKeyAtTime(double time)
 	{
-		Debug.Log(((int)time)  + " " + songSequence.Count);
+		//Debug.Log(((int)time)  + " " + songSequence.Count);
 		if (((int)time) >= songSequence.Count)
 		{
 			return null;

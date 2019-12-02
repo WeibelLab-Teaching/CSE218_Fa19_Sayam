@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ForwardSong : MonoBehaviour
 {
+    public Transform keyboard;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,8 @@ public class ForwardSong : MonoBehaviour
 
             GameState.Instance.Forward = true;
 
-
+            PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
+            psn.forwardSong();
         }
     }
 }
