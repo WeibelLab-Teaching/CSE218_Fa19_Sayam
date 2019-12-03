@@ -50,7 +50,7 @@ public class KeyboardPlacing : MonoBehaviour
         {
             Color prevKeyColor = key.gameObject.GetComponent<MeshRenderer>().material.color;
             Debug.Log("doing a key " + prevKeyColor.r + " " + prevKeyColor.g + " " + prevKeyColor.b);
-            Color newColor = new Color(prevKeyColor.r, prevKeyColor.g, prevKeyColor.b, 0.1f);
+            Color newColor = new Color(prevKeyColor.r, prevKeyColor.g, prevKeyColor.b, 0.15f);
             key.gameObject.GetComponent<MeshRenderer>().material.color = newColor;
         }
     }

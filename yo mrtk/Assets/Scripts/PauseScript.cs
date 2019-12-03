@@ -26,14 +26,18 @@ public class PauseScript : MonoBehaviour
         {
 
             GameState.Instance.Playing = false;
+
+            PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
+            psn.playPauseSong();
+
+
             // hide the pause button
             gameObject.SetActive(false);
             // show the play button
             playBtn.gameObject.SetActive(true);
 
 
-            PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
-            psn.playPauseSong();
+            
         }
     }
 }

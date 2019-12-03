@@ -84,6 +84,7 @@ public class PlaySongNotes : MonoBehaviour
     // Called by button callback
     public void playPauseSong()
     {
+        Debug.Log(sp);
         sp.playPauseSong(Time.time);
     }
 
