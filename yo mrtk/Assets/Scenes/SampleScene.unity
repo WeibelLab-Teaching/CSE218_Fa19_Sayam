@@ -1007,7 +1007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199850729}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.017127039, y: -0.3675449, z: -0.86714923}
+  m_LocalPosition: {x: 0.017127039, y: -0.093, z: -0.86714923}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1846176413}
@@ -1546,7 +1546,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100072, guid: 978077e6757c52f4ea1ee1038d93c932, type: 3}
       propertyPath: m_Name
-      value: Keyboard_older
+      value: Keyboard
       objectReference: {fileID: 0}
     - target: {fileID: 100072, guid: 978077e6757c52f4ea1ee1038d93c932, type: 3}
       propertyPath: m_IsActive
@@ -1634,7 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0a1881ff3014c4080b669e5d24da39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboard: {fileID: 1846176413}
+  keyboard: {fileID: 1818513677}
 --- !u!1 &846574586
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,7 +2345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce91167598ae8e42aea43c5ff222255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboard: {fileID: 1846176413}
+  keyboard: {fileID: 1818513677}
   instructionText: {fileID: 846574587}
   PlayButton: {fileID: 2025519577}
   PauseButton: {fileID: 119216806}
@@ -2592,7 +2592,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255574814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.017127039, y: 0.13, z: 0.35}
+  m_LocalPosition: {x: 0.017127039, y: 0.209, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1034574142}
@@ -2849,7 +2849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3f50fa299634917afa990248ae20d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboard: {fileID: 1846176413}
+  keyboard: {fileID: 1818513677}
 --- !u!1001 &1838335458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3074,11 +3074,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100120, guid: 4c33d048b5c40334d8d836286f578316, type: 3}
       propertyPath: m_Name
-      value: Keyboard
+      value: Keyboard_oldest
       objectReference: {fileID: 0}
     - target: {fileID: 100120, guid: 4c33d048b5c40334d8d836286f578316, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: 4c33d048b5c40334d8d836286f578316, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3278,7 +3278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hostTransform: {fileID: 0}
   manipulationType: 2
-  twoHandedManipulationType: 5
+  twoHandedManipulationType: 3
   allowFarManipulation: 1
   oneHandRotationModeNear: 6
   oneHandRotationModeFar: 6
@@ -3307,8 +3307,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017011376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.017127039, y: -0.13245511, z: 0.86714923}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.017127039, y: 0.045, z: 1.12}
+  m_LocalScale: {x: 0.8726169, y: 0.8726169, z: 0.8726169}
   m_Children:
   - {fileID: 199850731}
   - {fileID: 1255574819}
@@ -3334,7 +3334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseBtn: {fileID: 119216806}
-  keyboard: {fileID: 1846176413}
+  keyboard: {fileID: 1818513677}
 --- !u!4 &2025519577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2204069623020599746, guid: 3f1f46cbecbe08e46a303ccfdb5b498a,

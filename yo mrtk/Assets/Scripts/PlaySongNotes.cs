@@ -129,6 +129,10 @@ public class PlaySongNotes : MonoBehaviour
         prev_t = t;
         Debug.Log(t);*/
 
+        Debug.Log("Keyboard scale: ");
+        Debug.Log(this.gameObject.transform.localScale);
+        Debug.Log(this.gameObject.transform.lossyScale);
+
         double curTS = Time.time;
 
         if(showingGetReady)
