@@ -18,6 +18,8 @@ public class PlaySongNotes : MonoBehaviour
     public Transform keyboardPlacingButton;
     public Transform playButton;
     public Transform pauseButton;
+    public Transform fingerText;
+    float fingerTextZ = 0;
 
     // 3..2..1 button parent
     public Transform getReadyButton;
@@ -35,6 +37,8 @@ public class PlaySongNotes : MonoBehaviour
         //Time.timeScale = ;
         //Time.fixedDeltaTime = 2e-10f * Time.timeScale;
         Debug.Log(pianoKeys[0].name);
+
+
     }
 
     public void songSelected()
@@ -53,6 +57,9 @@ public class PlaySongNotes : MonoBehaviour
 
     public void startGetReadyCountDown()
     {
+        Vector3 keyPos = pianoKeys[0].gameObject.transform.position;
+        fingerTextZ = keyPos.z + 0.09f;
+
         showingGetReady = true;
         getReadyStartTS = Time.time;
         getReadyButton.gameObject.SetActive(true);
@@ -133,10 +140,14 @@ public class PlaySongNotes : MonoBehaviour
         Debug.Log(this.gameObject.transform.localScale);
         Debug.Log(this.gameObject.transform.lossyScale);
 
+
+
         double curTS = Time.time;
 
         if(showingGetReady)
         {
+
+            fingerText.gameObject.SetActive(false);
             double elapsed = curTS - getReadyStartTS;
             double mul = 1.2;
             if (elapsed < 0.5*mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "3.";
@@ -152,7 +163,9 @@ public class PlaySongNotes : MonoBehaviour
 
 		if (sp.getPressedKeyAtTime(curTS) == null)
         {
-            if(prevKeyIndex != -1)
+
+            fingerText.gameObject.SetActive(false);
+            if (prevKeyIndex != -1)
             {
                 pianoKeys[prevKeyIndex].gameObject.GetComponent<MeshRenderer>().material.color = prevKeyColor;
                 prevKeyIndex = -1;
@@ -177,6 +190,11 @@ public class PlaySongNotes : MonoBehaviour
             if(pianoKeys[i].name.StartsWith(kp.key))
 			{
 				prevKeyColor = pianoKeys[i].gameObject.GetComponent<MeshRenderer>().material.color;
+                Debug.Log("key pos: " + pianoKeys[i].gameObject.transform.position);
+                Vector3 keyPos = pianoKeys[i].gameObject.transform.position;
+                fingerText.gameObject.SetActive(true);
+                fingerText.gameObject.transform.position = new Vector3(keyPos.x - 0.005f, keyPos.y, fingerTextZ);
+                fingerText.gameObject.GetComponent<TextMesh>().text = kp.finger;
 
                 Color newColor;
                 if (kp.key.StartsWith("B_"))
