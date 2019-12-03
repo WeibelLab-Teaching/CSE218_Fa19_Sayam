@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Microsoft.MixedReality.Toolkit.UI;
-using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 
-public class SongMenuHandler : MonoBehaviour
+public class TempoMenuHandler : MonoBehaviour
 {
 
-    public Transform songList;
-    public Transform fullMenu;
+    public Transform tempoList;
 
 
     // Start is called before the first frame update
@@ -22,12 +19,13 @@ public class SongMenuHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
-    public void OnAirTap() 
+    public void OnAirTap()
     {
-        songList.gameObject.SetActive(!songList.gameObject.activeSelf);
+        tempoList.gameObject.SetActive(!tempoList.gameObject.activeSelf);
+        Debug.Log("tempo menu clicked!!!!!");
     }
 }

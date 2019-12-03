@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Microsoft.MixedReality.Toolkit.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,11 @@ public class KeyboardPlacing : MonoBehaviour
 {
     public Transform keyboard;
     public Transform instructionText;
+    public Transform PlayButton;
+    public Transform ForwardButton;
+    public Transform BackwardButton;
+    public Transform fullMenu;
+    public Transform gameRoot;
     bool currentlyPlacingKeyboard = false;
 
     // Start is called before the first frame update
@@ -25,8 +31,26 @@ public class KeyboardPlacing : MonoBehaviour
         if(!currentlyPlacingKeyboard)
         {
             currentlyPlacingKeyboard = true;
+            keyboard.gameObject.SetActive(true);
+            fullMenu.gameObject.SetActive(false);
             gameObject.SetActive(true);
+
+            gameRoot.gameObject.GetComponent<ManipulationHandler>().enabled = true;
+
             instructionText.gameObject.SetActive(true);
+        }
+    }
+
+
+    public void makePianoTransparent()
+    {
+
+        foreach (Transform key in keyboard)
+        {
+            Color prevKeyColor = key.gameObject.GetComponent<MeshRenderer>().material.color;
+            Debug.Log("doing a key " + prevKeyColor.r + " " + prevKeyColor.g + " " + prevKeyColor.b);
+            Color newColor = new Color(prevKeyColor.r, prevKeyColor.g, prevKeyColor.b, 0.1f);
+            key.gameObject.GetComponent<MeshRenderer>().material.color = newColor;
         }
     }
 
@@ -37,10 +61,18 @@ public class KeyboardPlacing : MonoBehaviour
             Debug.Log("kEYBOARD PLACEMENT dONE");
             gameObject.SetActive(false);
             instructionText.gameObject.SetActive(false);
+            gameRoot.gameObject.GetComponent<ManipulationHandler>().enabled = false;
+
+            makePianoTransparent();
+
+            PlayButton.gameObject.SetActive(true);
+            ForwardButton.gameObject.SetActive(true);
+            BackwardButton.gameObject.SetActive(true);
             GameState.Instance.keyboardPlaced = true;
+            fullMenu.gameObject.SetActive(true);
 
             PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
-            psn.startPlaying();
+            psn.startGetReadyCountDown();
         }
     }
 }
