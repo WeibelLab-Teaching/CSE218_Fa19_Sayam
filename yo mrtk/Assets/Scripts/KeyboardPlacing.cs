@@ -15,6 +15,14 @@ public class KeyboardPlacing : MonoBehaviour
     public Transform gameRoot;
     bool currentlyPlacingKeyboard = false;
 
+
+    //public Transform uButton;
+    //public Transform dButton;
+    public Transform rButton;
+    public Transform lButton;
+    public Transform cwButton;
+    public Transform ccwButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +35,16 @@ public class KeyboardPlacing : MonoBehaviour
 
     }
 
+    void showMoveButtons(bool show)
+    {
+        //uButton.gameObject.SetActive(show);
+        //dButton.gameObject.SetActive(show);
+        rButton.gameObject.SetActive(show);
+        lButton.gameObject.SetActive(show);
+        cwButton.gameObject.SetActive(show);
+        ccwButton.gameObject.SetActive(show);
+    }
+
     public void userPlacingKeyboard()
     {
         if(!currentlyPlacingKeyboard)
@@ -35,6 +53,7 @@ public class KeyboardPlacing : MonoBehaviour
             keyboard.gameObject.SetActive(true);
             fullMenu.gameObject.SetActive(false);
             gameObject.SetActive(true);
+            showMoveButtons(true);
 
             gameRoot.gameObject.GetComponent<ManipulationHandler>().enabled = true;
 
@@ -62,6 +81,7 @@ public class KeyboardPlacing : MonoBehaviour
             Debug.Log("kEYBOARD PLACEMENT dONE");
             gameObject.SetActive(false);
             instructionText.gameObject.SetActive(false);
+            showMoveButtons(false);
             gameRoot.gameObject.GetComponent<ManipulationHandler>().enabled = false;
 
             makePianoTransparent();
@@ -76,5 +96,40 @@ public class KeyboardPlacing : MonoBehaviour
             PlaySongNotes psn = (PlaySongNotes)keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
             psn.startGetReadyCountDown();
         }
+    }
+
+    float moveBy = 0.003f;
+    /*public void upTapped()
+    {
+        Vector3 oldPos = gameRoot.gameObject.transform.position;
+        gameRoot.gameObject.transform.position = new Vector3(oldPos.x, oldPos.y, oldPos.z + moveBy);
+    }
+
+    public void dTapped()
+    {
+        Vector3 oldPos = gameRoot.gameObject.transform.position;
+        gameRoot.gameObject.transform.position = new Vector3(oldPos.x, oldPos.y, oldPos.z - moveBy);
+    }*/
+
+    public void rTapped()
+    {
+        Vector3 oldPos = gameRoot.gameObject.transform.position;
+        gameRoot.gameObject.transform.position = new Vector3(oldPos.x + moveBy, oldPos.y, oldPos.z);
+    }
+
+    public void lTapped()
+    {
+        Vector3 oldPos = gameRoot.gameObject.transform.position;
+        gameRoot.gameObject.transform.position = new Vector3(oldPos.x - moveBy, oldPos.y, oldPos.z);
+    }
+
+    public void cwTapped()
+    {
+        gameRoot.gameObject.transform.RotateAround(new Vector3(0, 1, 0), 0.02f);
+    }
+
+    public void ccwTapped()
+    {
+        gameRoot.gameObject.transform.RotateAround(new Vector3(0, 1, 0), -0.02f);
     }
 }

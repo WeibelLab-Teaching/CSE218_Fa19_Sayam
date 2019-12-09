@@ -7,6 +7,7 @@ public class PlaySongNotes : MonoBehaviour
 {
     //int frameNum;
     List<Transform> pianoKeys = new List<Transform>();
+    List<Transform> handFingers = new List<Transform>();
     SongPlayer sp;
 
     // Prev state
@@ -19,7 +20,9 @@ public class PlaySongNotes : MonoBehaviour
     public Transform playButton;
     public Transform pauseButton;
     public Transform fingerText;
+    public Transform hand;
     float fingerTextZ = 0;
+    float handZ = 0;
 
     // 3..2..1 button parent
     public Transform getReadyButton;
@@ -31,14 +34,14 @@ public class PlaySongNotes : MonoBehaviour
     {
         // Add piano keys gameobjects to a list
         setupPainoKeys();
+        setupHandFingers();
 
         // Init song Provider
         sp = new SongPlayer(getCurrentSongFile());
         //Time.timeScale = ;
         //Time.fixedDeltaTime = 2e-10f * Time.timeScale;
         Debug.Log(pianoKeys[0].name);
-
-
+        
     }
 
     public void songSelected()
@@ -59,6 +62,7 @@ public class PlaySongNotes : MonoBehaviour
     {
         Vector3 keyPos = pianoKeys[0].gameObject.transform.position;
         fingerTextZ = keyPos.z + 0.09f;
+        handZ = keyPos.z - 0.1f;
 
         showingGetReady = true;
         getReadyStartTS = Time.time;
@@ -148,6 +152,7 @@ public class PlaySongNotes : MonoBehaviour
         {
 
             fingerText.gameObject.SetActive(false);
+            hand.gameObject.SetActive(false);
             double elapsed = curTS - getReadyStartTS;
             double mul = 1.2;
             if (elapsed < 0.5*mul) getReadyButton.gameObject.GetComponent<TextMesh>().text = "3.";
@@ -165,6 +170,7 @@ public class PlaySongNotes : MonoBehaviour
         {
 
             fingerText.gameObject.SetActive(false);
+            hand.gameObject.SetActive(false);
             if (prevKeyIndex != -1)
             {
                 pianoKeys[prevKeyIndex].gameObject.GetComponent<MeshRenderer>().material.color = prevKeyColor;
@@ -192,9 +198,27 @@ public class PlaySongNotes : MonoBehaviour
 				prevKeyColor = pianoKeys[i].gameObject.GetComponent<MeshRenderer>().material.color;
                 Debug.Log("key pos: " + pianoKeys[i].gameObject.transform.position);
                 Vector3 keyPos = pianoKeys[i].gameObject.transform.position;
-                fingerText.gameObject.SetActive(true);
+                //fingerText.gameObject.SetActive(true);
                 fingerText.gameObject.transform.position = new Vector3(keyPos.x - 0.005f, keyPos.y, fingerTextZ);
                 fingerText.gameObject.GetComponent<TextMesh>().text = kp.finger;
+
+                hand.gameObject.SetActive(true);
+                hand.gameObject.transform.position = new Vector3(keyPos.x - 0.005f, keyPos.y, handZ);
+                for(int j=0;j<6;j++)
+                {
+                    Color defColor = new Color(1, 1, 1, 0.15f);
+                    handFingers[j].gameObject.GetComponent<MeshRenderer>().material.color = defColor;
+                }
+                Color fingerColor = new Color(0.1462f, 0.7607f, 1, 1);
+                if (kp.finger.Equals("rt"))
+                {
+                    handFingers[5].gameObject.GetComponent<MeshRenderer>().material.color = fingerColor;
+                }
+                else
+                {
+                    int fingerNum = int.Parse(kp.finger[1].ToString());
+                    handFingers[fingerNum-1].gameObject.GetComponent<MeshRenderer>().material.color = fingerColor;
+                }
 
                 Color newColor;
                 if (kp.key.StartsWith("B_"))
@@ -221,15 +245,27 @@ public class PlaySongNotes : MonoBehaviour
 		{
 			pianoKeys.Add(child);
 		}
-	}
-	
+    }
 
-	string getCurrentSongFile()
+    void setupHandFingers()
+    {
+        foreach (Transform child in hand)
+        {
+            handFingers.Add(child);
+
+            Color prevKeyColor = child.gameObject.GetComponent<MeshRenderer>().material.color;
+            Color newColor = new Color(prevKeyColor.r, prevKeyColor.g, prevKeyColor.b, 0.15f);
+            child.gameObject.GetComponent<MeshRenderer>().material.color = newColor;
+        }
+    }
+
+
+    string getCurrentSongFile()
 	{
         string curSong = GameState.Instance.currentSong;
         if (curSong.Equals("Twinkle Twinkle"))
         {
-            return "Assets/song_notes/sample_song.txt";
+            return "Assets/song_notes/twinkle.txt";
         }
         return "Assets/song_notes/sample_song_2.txt";
     }
@@ -330,6 +366,11 @@ public class SongProviderV1
         {
             for (int i = 0; i < contents.Length; i++)
             {
+                if(contents[i].StartsWith("P"))
+                {
+                    songSequence.Add(null);
+                    continue;
+                }
                 string[] keyDetails = contents[i].Split(',');
                 KeyPress kp = new KeyPress(keyDetails[0], keyDetails[1], i);
                 songSequence.Add(kp);
@@ -345,7 +386,7 @@ public class SongProviderV1
 		{
 			return null;
 		}
-		return songSequence[(int)time];
+		return songSequence[(int)(time/1.7)];
 	}
 }
 
