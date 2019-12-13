@@ -2,9 +2,7 @@
 
 An app that makes learning to play the piano much more fun and simple.
 
-##### Developed by Team SAYAM
-###### Mayank Rajoria, Yuvaraj Kakaraparthy, Sabrina Simao, Aveek Biswas, Sujith Chappidi, Akshansh Chahal
-
+###### Team SAYAM: Mayank Rajoria, Yuvaraj Kakaraparthy, Sabrina Simao, Aveek Biswas, Sujith Chappidi, Akshansh Chahal
 
 ## Motivation
 
@@ -25,8 +23,8 @@ Just after opening the app, the user sees the option of selecting a song they wa
 
 Here are a few snapshots showing the app in action:
 
-![doc](Images/align_keyboard.png)
 ![doc](Images/song_selection.png)
+![doc](Images/align_keyboard.png)
 ![doc](Images/pause_button.png)
 
 
@@ -37,17 +35,17 @@ Here are a few snapshots showing the app in action:
 3.	Buttons to help align the holographic keyboard easily with precision.
 4.	Start, pause, rewind and forward buttons to practice while learning the song.
 5.	A holographic hand showing which fingers are to be used to press a certain key.
-6.	Use of different colors (red for black keys and green for the white ones) for the keyboard overlay to easily identify which keys to be pressed.
+6.	Use of different colors (red for black keys and green for the white ones) in the keyboard overlay to easily identify which keys to be pressed.
 
 
 ## Testing and Evaluation
 
-We developed this product in multiple iterations incorporating user feedback after each iteration. The important feedbacks that we had got from the user-testing sessions are:
+We developed this product in multiple iterations incorporating user feedback after each iteration. The important feedbacks that we got from the user-testing sessions are:
 1.	Aligning the keyboard should be easier
 2.	A countdown timer before the song starts so that the user can get ready after selecting the song
 3.	Feedback on how the user actually played the song
 
-We incorporated the first two suggestions but the feedback mechanism was added as future enhancement.
+We incorporated the first two suggestions but the feedback mechanism was added as a future enhancement.
 
 
 ## Agile Development  process
@@ -57,3 +55,10 @@ The team followed the agile development process which helped in incorporating us
 1.	Microsoft Hololens
 2.	Unity and Mixed Reality toolkit
 3.	Zenhub and Github
+
+## Future work
+
+Our app was successful in meeting the basic requirement of helping a beginner get started very quickly. The users seemed to be happy with the simple user experience and said that the app did help them learning a song easily. However, there are plenty of rooms for improvement on this app. A few of them are listed below:
+1. Provide feedback to the user after he plays the song himself.
+2. Enable multi-user collaboration.
+3. Detecting the keyboard automatically without the need to align manually.
