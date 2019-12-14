@@ -28,6 +28,8 @@ Here are a few snapshots showing the app in action:
 ![doc](Images/pause_button.png)
 
 
+[Click Here](https://wikipedia.org) to see a full demo of the app.
+
 ## Product Features
 
 1.	A song menu where the user selects the song he wants to learn.
