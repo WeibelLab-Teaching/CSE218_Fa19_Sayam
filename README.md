@@ -28,7 +28,7 @@ Here are a few snapshots showing the app in action:
 ![doc](Images/pause_button.png)
 
 
-[Click Here](https://wikipedia.org) to see a full demo of the app.
+[Click Here](https://www.youtube.com/watch?v=ZToSpnoHnFE&feature=youtu.be) to see a full demo of the app.
 
 ## Product Features
 
