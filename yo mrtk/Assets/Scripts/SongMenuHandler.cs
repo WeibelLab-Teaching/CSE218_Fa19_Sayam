@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 
 public class SongMenuHandler : MonoBehaviour
 {
 
     public Transform songList;
+    public Transform fullMenu;
 
 
     // Start is called before the first frame update
@@ -26,6 +29,5 @@ public class SongMenuHandler : MonoBehaviour
     public void OnAirTap() 
     {
         songList.gameObject.SetActive(!songList.gameObject.activeSelf);
-        //Debug.Log("clicked!!!!!");
     }
 }

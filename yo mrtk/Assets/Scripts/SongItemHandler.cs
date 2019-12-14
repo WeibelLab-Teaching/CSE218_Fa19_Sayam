@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 
 public class SongItemHandler : MonoBehaviour
 {
     public Transform songList;
+    public Transform selectSongBtn;
     public Transform currentItem;
     public Transform keyboard;
+    public Transform fullMenu;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,14 +29,12 @@ public class SongItemHandler : MonoBehaviour
     {
         songList.gameObject.SetActive(false);
         GameState.Instance.currentSong = currentItem.Find("ButtonContent").Find("Label").GetComponent<TextMesh>().text;
-        if (!keyboard.gameObject.activeSelf)
-        {
-            keyboard.gameObject.SetActive(true);
-
-            //accessing the script on another object and calling a function
-            PlaySongNotes play = (PlaySongNotes) keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
-            play.songSelected();
-        }
+        selectSongBtn.Find("ButtonContent").Find("Label").GetComponent<TextMesh>().text = GameState.Instance.truncate("Song: " + GameState.Instance.currentSong);
+       
+        //accessing the script on another object and calling a function
+        PlaySongNotes play = (PlaySongNotes) keyboard.gameObject.GetComponent(typeof(PlaySongNotes));
+        play.songSelected();
+        
 
     }
 }
